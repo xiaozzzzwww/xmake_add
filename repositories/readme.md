@@ -110,4 +110,5 @@
         end)
 
 添加好后就可以通过xmake下载安装包了
-此时见xmake官网文档
+具体见xmake官网文档
+链接：https://xmake.io/#/zh-cn/manual/package_dependencies?id=%e4%bb%93%e5%ba%93%e4%be%9d%e8%b5%96%e5%8c%85%e5%ae%9a%e4%b9%89%e6%8f%8f%e8%bf%b0
