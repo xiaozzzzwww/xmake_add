@@ -1,9 +1,6 @@
 add_rules("mode.debug", "mode.release")
 
-add_includedirs("include")
---静态库项目
-
-    
+--静态项目
 set_symbols("debug")
 set_runtimes("MTd")
 target("libntld")
