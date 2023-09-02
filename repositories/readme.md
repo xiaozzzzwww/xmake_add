@@ -81,33 +81,33 @@
     -- 可能错误 需要自行更改
 
     package("ntl")
-        set_homepage("https://libntl.org/")
-        set_description("NTL is a high-performance, portable C++ library providing data structures and algorithms for manipulating signed, arbitrary length integers, and for vectors, matrices, and polynomials over the integers and over finite fields.")
-        set_license("LGPLv2.1+")
-        if is_plat("windows") then
-            add_urls("https://libntl.org/WinNTL-11_5_1.zip")
-        end 
-        if is_plat("linux") then
-            add_urls("https://libntl.org/ntl-11.5.1.tar.gz" )
-        end
-        add_versions("11.5.1","0bd2c6acec1cde5b0f826538d6a3ba48224f6df3033a829a79e06e11b5c5faa2")  --sha256 此sha256为压缩包的sha256
-        
-        add_includedirs("include")
-        add_linkdirs("lib")
-        add_links("ntl")
-        add_deps("cmake")
 
-        -- ntl库官方不提供CMakeLists.txt文件，需要自己创建，所以底下可能出错，仅供参考 
-        -- 具体见 https://libntl.org/doc/tour-unix.html
-        -- https://libntl.org/doc/tour-win.html
+    set_homepage("https://libntl.org/")
+    set_description("NTL is a high-performance, portable C++ library providing data structures and algorithms for manipulating signed, arbitrary length integers, and for vectors, matrices, and polynomials over the integers and over finite fields.")
+    set_license("LGPLv2.1+")
+    if is_plat("windows") then
+        add_urls("https://github.com/xiaozzzzwww/libntl/archive/refs/heads/master.zip")
+		add_configs("shared",     {description = "Build shared library.", default = false, type = "boolean", readonly = true})
+        add_configs("vs_runtime", {description = "Set vs compiler runtime.", default = "MT", readonly = true})
+    end
+    if is_plat("linux") then
+        add_urls("https://libntl.org/ntl-11.5.1.tar.gz" )
+    end
+    add_versions("11.5.1","9bf764b3faa81189af3fe82f296980a600091e5b9d1a9bbabc2ce39f88f7a0fb")
+    add_deps("cmake")
+	add_includedirs("include")
+	add_linkdirs("lib")
+	add_links("libntl")
+	
 
-        on_install("windows", "linux", "macosx", function (package)
-            table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
-            table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
-            import("package.tools.cmake").install(package, configs)
-            os.cp("include/NTL", package:installdir("include"))
-            os.cp("lib/*",package:installdir("lib"))
-        end)
+    on_install("windows", function (package)
+		local configs = {}
+		table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
+        import("package.tools.cmake").install(package, configs)
+		--os.cp("include/NTL", package:installdir("include"))
+		--os.cp("lib/*",package:installdir("lib"))
+    end)
+
 
 添加好后就可以通过xmake下载安装包了
 具体见xmake官网文档
