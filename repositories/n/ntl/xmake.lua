@@ -1,32 +1,28 @@
-add_rules("mode.debug", "mode.release")
+package("ntl")
 
---静态项目
-set_symbols("debug")
-set_runtimes("MTd")
-target("libntld")
-    set_kind("static")
-    add_includedirs("include")
-    add_files("src/*.cpp")
+    set_homepage("https://libntl.org/")
+    set_description("NTL is a high-performance, portable C++ library providing data structures and algorithms for manipulating signed, arbitrary length integers, and for vectors, matrices, and polynomials over the integers and over finite fields.")
+    set_license("LGPLv2.1+")
+    if is_plat("windows") then
+        add_urls("https://github.com/xiaozzzzwww/libntl/archive/refs/heads/master.zip")
+		add_configs("shared",     {description = "Build shared library.", default = false, type = "boolean", readonly = true})
+        add_configs("vs_runtime", {description = "Set vs compiler runtime.", default = "MT", readonly = true})
+    end
+    if is_plat("linux") then
+        add_urls("https://libntl.org/ntl-11.5.1.tar.gz" )
+    end
+    add_versions("11.5.1","9bf764b3faa81189af3fe82f296980a600091e5b9d1a9bbabc2ce39f88f7a0fb")
+    add_deps("cmake")
+	add_includedirs("include")
+	add_linkdirs("lib")
+	add_links("libntl")
+	
+
     on_install("windows", function (package)
-            os.cp("include/*", package:installdir("include"))
-            os.cp("lib/*", package:installdir("lib"))
-        end)
-
-    -- set_symbols("release")
-    -- -- set_runtimes("MD")
-    -- -- target("ntl")
-    -- --     set_kind("shared")
-    -- --     add_files("src/*.cpp")
-    -- set_runtimes("MT")
-    -- target("libntld")
-    --     set_kind("static")
-    --     add_files("src/*.cpp")
-        
-        
-    --     on_install(function (target)
-    --         os.cp("include", target:installdir(""))
-    --         --os.cp("lib", target:installdir(""))
-    --         print("install ok!")
-    --         print(packages:installdir())
-    --     end)
+		local configs = {}
+		table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
+        import("package.tools.cmake").install(package, configs)
+		--os.cp("include/NTL", package:installdir("include"))
+		--os.cp("lib/*",package:installdir("lib"))
+    end)
 
