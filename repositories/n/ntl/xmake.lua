@@ -48,6 +48,7 @@ package("ntl")
 			os.cp("include", package:installdir())
         elseif is_plat("linux") then 
             os.exec("cd","src")
+	    -- 默认的关键字是--prefix,而下载的安装包里面没有这个关键字，下载的里面是PREFIX
             import("package.tools.autoconf").install(package)
         end 
     end)
