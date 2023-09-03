@@ -15,7 +15,7 @@ package("ntl")
         add_versions("11.5.1","210d06c31306cbc6eaf6814453c56c776d9d8e8df36d74eb306f6a523d1c6a8a")
         add_versions("11.5.0","4f89c417699a3be541eb919f7af2d7c030ea17bc51146052d724ef66288f0078")
         add_versions("11.4.4","9d7f6e82e11a409f151c0de2deb08c0d763baf9834fddfd432bf3d218f8021db")
-		add_configs("shared",     {description = "Build shared library.", default = false, type = "boolean", readonly = true})
+
         add_deps("gmp")    
     end
 
@@ -47,8 +47,11 @@ package("ntl")
 			package:addenv("PATH","lib")
 			os.cp("include", package:installdir())
         elseif is_plat("linux") then 
+            -- configure  in src
             os.exec("cd","src")
-	    -- 默认的关键字是--prefix,而下载的安装包里面没有这个关键字，下载的里面是PREFIX
+            -- The keyword for the default installation path is -- prefix, but the ntl library is PREFIX
+            -- Ntl library relies on gmp library under Linux
+            -- I dont know how to write
             import("package.tools.autoconf").install(package)
         end 
     end)
