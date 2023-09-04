@@ -5,7 +5,7 @@ package("ntl")
     set_license("LGPLv2.1+")
     if is_plat("windows") then
         add_urls("https://libntl.org/WinNTL-${version}.zip")
-        add_versions("11_5_1","0f95b126764e41845c39929e1677c77ad9b743411d4e233ccfe4a6f8a35ed6a8")
+        add_versions("11.5.1","0f95b126764e41845c39929e1677c77ad9b743411d4e233ccfe4a6f8a35ed6a8")
         add_versions("11_5_0","092677e6e876ca75ddf9ead8bd71a4b44ea07b09bc39bdd7f9d655282ec71fb4")
         add_versions("11_4_4","29efb96669a295eebdd9b2966ed561120c8e149cbaa6dd506f14b63b226f1522")
         add_configs("vs_runtime", {description = "Set vs compiler runtime.", default = "MT", readonly = true})
