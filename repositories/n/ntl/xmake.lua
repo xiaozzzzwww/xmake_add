@@ -15,12 +15,12 @@ package("ntl")
         add_versions("11.5.1","210d06c31306cbc6eaf6814453c56c776d9d8e8df36d74eb306f6a523d1c6a8a")
         add_versions("11.5.0","4f89c417699a3be541eb919f7af2d7c030ea17bc51146052d724ef66288f0078")
         add_versions("11.4.4","9d7f6e82e11a409f151c0de2deb08c0d763baf9834fddfd432bf3d218f8021db")
-add_configs("shared",     {description = "Build shared library.", default = false, type = "boolean", readonly = true})
+        add_configs("shared",     {description = "Build shared library.", default = false, type = "boolean", readonly = true})
         add_deps("gmp","autoconf","automake")
     end
-add_includedirs("include")
-add_linkdirs("lib")
-add_links("libntl")
+    add_includedirs("include")
+    add_linkdirs("lib")
+    add_links("libntl")
 
     on_install("windows","linux", function (package)
         if is_plat("windows") then
@@ -41,15 +41,20 @@ add_links("libntl")
                     add_files("src/*.cpp")
             end
             ]])
-      local configs = {}
-   table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
-            import("package.tools.xmake").install(package, configs)
+        local configs = {}
+        table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
+        import("package.tools.xmake").install(package, configs)
         elseif is_plat("linux") then
-       os.cd("src")
-local install_dir=package:installdir()
-os.vrun("./configure PREFIX="..install_dir)
-os.vrun("make -j4")
-os.vrun("make install")
+        os.cd("src")
+        local install_dir=package:installdir()
+        os.vrun("./configure PREFIX="..install_dir)
+        os.vrun("make -j4")
+        os.vrun("make install")
         end 
+    end)
+
+    after_install("linux", function (package)
+        print("ntl library relies on gmp! ")
+        print("If there is an installation error, please install gmp first! Global install in the system!")
     end)
  
