@@ -1,8 +1,0 @@
-# 默认忽略的文件
-/../../xmake_add./.idea/shelf/
-/../../xmake_add./.idea/workspace.xml
-# 基于编辑器的 HTTP 客户端请求
-/../../xmake_add./.idea/httpRequests/
-# Datasource local storage ignored files
-/../../xmake_add./.idea/dataSources/
-/../../xmake_add./.idea/dataSources.local.xml
