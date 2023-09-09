@@ -30,7 +30,7 @@ package("ntl")
             set_languages("c++11")
             if is_mode("debug") then
                 add_defines("_DEBUG")
-                target("libntld")
+                target("libntl")
                     set_kind("static")
                     add_includedirs("include")
                     add_files("src/*.cpp")
