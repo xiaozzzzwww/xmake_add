@@ -43,6 +43,7 @@ package("ntl")
             end
             ]])
             import("package.tools.xmake").install(package)
+            os.cp("include", package:installdir())
         elseif is_plat("linux") then
             os.cd("src")
             local install_dir=package:installdir()
